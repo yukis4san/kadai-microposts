@@ -39,6 +39,18 @@ class UsersController < ApplicationController
     counts(@user)
   end
 
+  def favorites
+    @user = User.find(params[:id])
+    @favorites = @user.liked_posts.order('created_at DESC').page(params[:page])
+    counts(@user)
+  end
+  
+  def favorite_posts
+    @user = User.find(params[:id])
+    #特定のユーザーが登録したお気に入りを全て取得する
+    @favorites = Favorite.where("user_id = ?", @user)  
+  end
+  
   private
 
   def user_params
