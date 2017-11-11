@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.order('created_at DESC').page(params[:page])
+    @micropost = current_user.microposts.build
     counts(@user)
   end
 
@@ -50,7 +51,15 @@ class UsersController < ApplicationController
     #特定のユーザーが登録したお気に入りを全て取得する
     @favorites = Favorite.where("user_id = ?", @user)  
   end
-  
+
+  def search
+    @keyword = ''
+    if params[:keyword].present?
+      @keyword = params[:keyword]
+      @users = User.where("name LIKE '%#{@keyword}%'").page(params[:page])
+    end
+  end
+
   private
 
   def user_params

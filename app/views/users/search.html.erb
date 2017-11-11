@@ -1,0 +1,30 @@
+<div class="row">
+  <aside class="col-xs-4">
+    <div>
+    <h2>ユーザー検索 <span class="glyphicon glyphicon-user" aria-hidden="true"></span></h2>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">ユーザーを検索しましょう！</h3>
+      </div>
+      <div class="panel-body">ユーザー名を部分一致で検索することができます。</div>
+    </div>
+
+    <div class="row">
+      <%= form_tag(search_users_path, method: :get,  class: 'navbar-form navbar-left') do %>
+        <div class="form-group">
+          <%= text_field_tag('keyword', @keyword,  class: 'form-control', placeholder: 'キーワード') %>
+        </div>
+        <%= submit_tag('検索', class: 'btn btn-primary') %>
+      <% end %>
+    </div>
+  </aside>
+  <div class="col-xs-8">
+    <% if @users.present? %>
+      <h3>検索キーワード : <%= @keyword %></h3>
+      <h3>ヒット数 : <%= @users.size %></h3>
+      <%= render 'users', users: @users %>
+    <% end %>
+  </div>
+  </div>
+</div>

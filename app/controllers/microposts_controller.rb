@@ -6,7 +6,7 @@ class MicropostsController < ApplicationController
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
       flash[:success] = 'ポストを投稿しました。'
-      redirect_to root_url
+      redirect_to user_path(current_user)
     else
       @microposts = current_user.feed_microposts.order('created_at DESC').page(params[:page])
       flash.now[:danger] = 'ポストの投稿に失敗しました。'
